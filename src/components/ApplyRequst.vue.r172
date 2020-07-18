@@ -1,0 +1,291 @@
+/* 请假申请代/调/调代课子组件（教师个人中心请假申请） */
+<template>
+    <div style="width:100%;height:600px;margin-top:10px">
+    <!-- 申请原因picker -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="comment-o"
+      :value="valreason"
+      placeholder="申请原因"
+      @click="showPopupReason"
+      class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showReason" position="bottom">
+      <div class="area-wrapper">
+        <van-picker
+          :columns="reasondata"
+          show-toolbar
+          @cancel="onPopupCancel"
+          @confirm="onPopupConfirmReason"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 选择课程picker -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="orders-o"
+      :value="valcourse"
+      placeholder="选择课程"
+      @click="showPopupCourse"
+      class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showCourse" position="bottom">
+      <div class="area-wrapper">
+        <van-picker
+          :columns="coursedata"
+          show-toolbar
+          @cancel="onPopupCancel"
+          @confirm="onPopupConfirmCourse"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 选择老师Picker -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="contact"
+      :value="valteacher"
+      placeholder="选择调/代/调代课老师"
+      @click="showPopupTeacher"
+       class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showTeacher" position="bottom">
+      <div class="area-wrapper">
+        <van-picker
+          :columns="teacherdata"
+          show-toolbar
+          @cancel="onPopupCancel"
+          @confirm="onPopupConfirmTeacher"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 选择教室 -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="friends-o"
+      :value="valclassroom"
+      placeholder="选择新的教室"
+      @click="showPopupClass"
+      class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showClass" position="bottom">
+      <div class="area-wrapper">
+        <van-picker
+          :columns="classdata"
+          show-toolbar
+          @cancel="onPopupCancel"
+          @confirm="onPopupConfirmClass"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 选择日期 -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="underway-o"
+      :value="valday"
+      placeholder="选择新的上课日期"
+      @click="showPopupDay"
+      class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showDay" position="bottom">
+      <div class="area-wrapper">
+          <van-datetime-picker
+            v-model="currentDate"
+            type="date"
+            @cancel="onPopupCancel"
+            @confirm="onPopupConfirmTime"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 选择开始时间 -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="underway-o"
+      :value="valStart"
+      placeholder="选择开始时间"
+      error-message="选择开始时间"
+      @click="showPopupStart"
+      class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showStart" position="bottom">
+      <div class="area-wrapper">
+        <van-datetime-picker
+            v-model="valStart"
+            type="time"
+            @cancel="onPopupCancel"
+            @confirm="onPopupConfirmTime"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 选择结束时间 -->
+    <van-field
+      readonly
+      clickable
+      right-icon="arrow-down"
+      left-icon="underway-o"
+      :value="valEnd"
+      placeholder="选择结束时间"
+      error-message="选择结束时间"
+      @click="showPopupEnd"
+      class="mb-1"
+    />
+    <!-- 底部弹出层 -->
+    <van-popup v-model="showEnd" position="bottom">
+      <div class="area-wrapper">
+        <van-datetime-picker
+            v-model="valEnd"
+            type="time"
+            @cancel="onPopupCancel"
+            @confirm="onPopupConfirmTime"
+        />
+      </div>
+    </van-popup>
+    <div style="text-align:center"><van-button type="primary">确认提交</van-button></div>
+    </div>
+</template>
+
+<script>
+import { Field, Popup,Picker, DatetimePicker, Button} from 'vant';
+import {leftPadZero} from "@/common/time";
+import Vue from "vue"
+Vue.use(Field)
+.use(Popup)
+.use(Picker)
+.use(DatetimePicker)
+.use(Button);
+export default {
+    name: "ApplyRequst",
+    data() {
+        return {
+            showReason:false,
+            showCourse:false,
+            showTeacher:false,
+            showClass:false,
+            showDay:false,
+            showStart:false,
+            showEnd:false,
+            valreason:'',
+            valcourse:'',
+            valteacher:'',
+            valclassroom:'',
+            reasondata:['代课','调课','调代课'],
+            coursedata:[],
+            teacherdata:[],
+            classdata:[],
+            plans:[],
+            currentDate: new Date(),
+            valStart: '12:00',
+            valEnd: '12:00'
+        }
+    },
+    computed:{
+        valday:function(){
+        return leftPadZero(`${this.currentDate.getFullYear()}-${this.currentDate.getMonth() + 1}-${this.currentDate.getDate()}`)
+        },
+    },
+    methods:{
+        showPopupReason(){
+            this.showReason=true
+        },
+        showPopupCourse(){
+            this.showCourse=true
+        },
+        showPopupTeacher(){
+            this.showTeacher=true
+        },
+        showPopupClass(){
+            this.showClass=true
+        },
+        showPopupDay(){
+            this.showDay=true
+        },
+        showPopupStart(){
+            this.showStart=true
+        },
+        showPopupEnd(){
+            this.showEnd=true
+        },
+        onPopupCancel(){
+            this.showReason=false;
+            this.showCourse=false;
+            this.showTeacher=false;
+            this.showClass=false;
+            this.showDay=false;
+            this.showStart=false;
+            this.showEnd=false;
+        },
+        onPopupConfirmReason(value){
+            this.onPopupCancel();
+            this.valreason = value;
+        },
+         onPopupConfirmCourse(value){
+            this.onPopupCancel();
+            this.valcourse = value;
+        },
+         onPopupConfirmTeacher(value){
+            this.onPopupCancel();
+            this.valteacher = value;
+        },
+         onPopupConfirmClass(value){
+            this.onPopupCancel();
+            this.valclassroom = value;
+        },
+        onPopupConfirmTime(){
+            this.onPopupCancel();
+        },
+        async getAdjustScheduleOption() {
+          try {
+            const res = await this.$api.user.getAdjustScheduleOption();
+            for(let i=0;i<res.data[0].classrooms.length;i++){
+              this.classdata.push(res.data[0].classrooms[i].classroomName)
+            }
+            for(let i=0;i<res.data[0].teachers.length;i++){
+              this.teacherdata.push(res.data[0].teachers[i].teacherName)
+            }
+            for(let i=0;i<res.data[0].teachSchedules.length;i++){
+              this.coursedata.push(res.data[0].teachSchedules[i].className)
+            }
+          } catch (e) {
+            // eslint-disable-next-line
+            console.log("​catch -> e", e);
+          }
+        }
+    },
+    created() {
+    this.getAdjustScheduleOption();
+  }
+}
+</script>
+
+
+<style lang="scss" scoped>
+.area-wrapper {
+  background: $white;
+}
+.mb-1 {
+    margin-bottom: 10px;
+  }
+</style>

@@ -1,0 +1,103 @@
+{
+  "name": "zhsj_m",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "core-js": "^2.6.5",
+    "dayjs": "^1.8.17",
+    "echarts": "^4.2.1",
+    "hex-sha1": "^1.0.2",
+    "js-md5": "^0.7.3",
+    "less-loader": "^5.0.0",
+    "node-sass": "^4.14.1",
+    "normalizr": "^3.6.0",
+    "store": "^2.0.12",
+    "url-search-params-polyfill": "^8.0.0",
+    "v-charts": "^1.19.0",
+    "vant": "^2.0.9",
+    "vconsole": "^3.3.2",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuepress": "^1.2.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.13.0",
+    "compression-webpack-plugin": "^3.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "hard-source-webpack-plugin": "^0.13.1",
+    "image-webpack-loader": "^6.0.0",
+    "postcss-px-to-viewport": "^1.1.1",
+    "sass-loader": "^7.1.0",
+    "scss": "^0.2.4",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "vue-cli-plugin-scss-base": "^0.2.2",
+    "vue-template-compiler": "^2.6.10",
+    "webpack-bundle-analyzer": "^3.5.0",
+    "webpack-parallel-uglify-plugin": "^1.1.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {},
+      "postcss-px-to-viewport": {
+        "unitToConvert": "px",
+        "viewportWidth": 375,
+        "unitPrecision": 5,
+        "propList": [
+          "*"
+        ],
+        "viewportUnit": "vw",
+        "fontViewportUnit": "vw",
+        "selectorBlackList": [
+          "van"
+        ],
+        "minPixelValue": 1,
+        "mediaQuery": false,
+        "replace": true,
+        "exclude": [],
+        "landscape": false,
+        "landscapeUnit": "vw",
+        "landscapeWidth": 667
+      }
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11",
+    "Android >= 4.0",
+    "iOS >= 8"
+  ],
+  "transformModules": {
+    "cube-ui": {
+      "transform": "cube-ui/src/modules/${member}",
+      "kebabCase": true
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <!-- cdn预先解析 -->
+  <link rel="dns-prefetch" href="//cdn.bootcss.com">
+  <link rel="pre-connect" href="//at.alicdn.com">
+  <!-- iconfont 多色 -->
+  <script src="//at.alicdn.com/t/font_1289353_fbxp2ca4rn.js" async></script>
+
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css"> -->
+
+  <style type="text/css">
+    body{
+      background: #f8f8f8;
+    }
+    .color-icon {
+      width: 2.5em;
+      height: 2.5em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+  </style>
+  <title>爱实践</title>
+    <% for(var js of htmlWebpackPlugin.options.cdn) { %>
+      <script src="<%=js%>"></script>
+    <% } %>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but zhsj_m doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+    <!-- iconfont -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1289353_fbxp2ca4rn.css">
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
