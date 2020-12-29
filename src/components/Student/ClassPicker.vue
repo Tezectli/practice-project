@@ -3,7 +3,8 @@ To use:  v-modal="classId（data里的一个stirng类型变量）
  @change="需要重新调用的接口方法"*/
 <template>
   <div>
-    <van-tabs :ellipsis="false" swipe-threshold="2" type="card"  @click="onPopupConfirm" title-inactive-color="black" title-active-color="white" class="container active spanborder">
+    <van-tabs :ellipsis="false" swipe-threshold="2" type="line" @click="onPopupConfirm" title-inactive-color="black"
+      title-active-color="black" class="container active spanborder" color="#1989FA">
       <van-tab v-for="item of data" :key="item.key" :title="item.text" :name="item.key"></van-tab>
     </van-tabs>
   </div>
@@ -83,8 +84,8 @@ export default {
           };
         });
         // all模式加一个全部的选项
-        if(this.mode == 'all'){
-          this.data.unshift({key:'',text:'全部'})
+        if (this.mode == "all") {
+          this.data.unshift({ key: "", text: "全部" });
         }
         // 默认选第一个班
         this.$emit("update", this.data[0].key);
@@ -112,14 +113,29 @@ export default {
   width: 100%;
 }
 
-.container /deep/ .van-tabs__nav--card{
-  border:none;
+.container /deep/ .van-tabs__nav--card {
+  border: none;
   margin: 0;
 }
-.active /deep/ .van-tabs__nav--card .van-tab.van-tab--active{
-  background-color:rgb(56,114,229) 
+.active /deep/ .van-tabs__nav--card .van-tab.van-tab--active {
+  background-color: rgb(56, 114, 229);
 }
-.spanborder /deep/.van-tabs__nav--card .van-tab{
-  border:none;
+.spanborder /deep/.van-tabs__nav--card .van-tab {
+  border: none;
+}
+/*2020-10-14 更改tab间空隙*/
+/deep/.van-tab {
+  position: relative;
+  // -webkit-box-flex: 1;
+  // -webkit-flex: 1;
+  // flex: 1;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 0 10px;
+  color: #7d7e80;
+  font-size: 14px;
+  // line-height: 44px;
+  text-align: center;
+  cursor: pointer;
 }
 </style>

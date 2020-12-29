@@ -5,13 +5,7 @@ mode="single"||"all" 选填，可选值为'all',mode=‘all'可以为选择器�
 */
 <template>
   <div>
-    <van-tabs
-      :ellipsis="false"
-      swipe-threshold="2"
-      color="#1ab394"
-      @click="onConfirm"
-      v-model="active"
-    >
+    <van-tabs :ellipsis="false" swipe-threshold="2" color="#1989FA" @click="onConfirm" v-model="active">
       <van-tab v-for="item of data" :key="item.key" :title="item.text" :name="item.key"></van-tab>
     </van-tabs>
   </div>
@@ -91,7 +85,7 @@ export default {
           this.active = currentWeek;
           this.$emit("update", currentWeek);
           // single模式就反转数据，避免太长了看不到选了当前周产生这不会是bug吧的想法。
-          this.data = this.data.reverse()
+          this.data = this.data.reverse();
         }
         this.$emit("change");
       } catch (e) {

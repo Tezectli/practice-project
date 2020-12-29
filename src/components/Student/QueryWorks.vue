@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">可以选择课程查询已提交的作品哟！</van-notice-bar>
-    <class-picker v-model="course" mode="all" @change="getMyProduct"/>
+    <class-picker v-model="course" mode="all" @change="getMyProduct" />
     <van-dropdown-menu active-color="#1ab394">
       <van-dropdown-item v-model="sortMode" :options="optionSortMode" />
     </van-dropdown-menu>
@@ -25,8 +25,8 @@ import {
 } from "vant";
 import ClassPicker from "./ClassPicker";
 import StudentWorksFeed from "./StudentWorksFeed";
-import dayjs from 'dayjs';
-import { postTypeMap } from '@/common/keyMap'
+import dayjs from "dayjs";
+import { postTypeMap } from "@/common/keyMap";
 
 Vue.use(Cell)
   .use(CellGroup)
@@ -52,12 +52,20 @@ export default {
   },
   computed: {
     sortedWorks() {
-      const temp = this.works
+      const temp = this.works;
       const modeMap = {
-        '0':()=> temp.sort((work1,work2)=>{return work2.thumbUpNumbers - work1.thumbUpNumbers }),
-        '1':()=>temp.sort((work1,work2)=>{return parseFloat(dayjs(work1.buildTime).isBefore(work2.buildTime) -1 )})
-      }
-      return modeMap[this.sortMode]()
+        "0": () =>
+          temp.sort((work1, work2) => {
+            return work2.thumbUpNumbers - work1.thumbUpNumbers;
+          }),
+        "1": () =>
+          temp.sort((work1, work2) => {
+            return parseFloat(
+              dayjs(work1.buildTime).isBefore(work2.buildTime) - 1
+            );
+          })
+      };
+      return modeMap[this.sortMode]();
     }
   },
   methods: {
@@ -88,7 +96,7 @@ export default {
         // eslint-disable-next-line
         console.log("​catch -> e", e);
       }
-    },
+    }
   }
 };
 </script>
@@ -100,5 +108,12 @@ export default {
   &__transition {
     @include flex-col;
   }
+}
+/deep/.van-tabs--card {
+  padding-top: 0px;
+}
+/deep/.spanborder[data-v-757ad19c] .van-tabs__nav--card .van-tab {
+  border: none;
+  margin-right: 3px;
 }
 </style>

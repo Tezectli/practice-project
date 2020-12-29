@@ -1,15 +1,9 @@
 <template>
   <div class="card">
     <!-- 显示的卡片本体 -->
-    <van-card
-      class="card-itself price num"
-      :num="course.remain"
-      :price="[course.coursePrice > 0 ? course.coursePrice: '免费']"
-      :title="course.className"
-      :thumb="imgUrl"
-      :key="course.classId"
-      @click="getClassInfo(course.classId)"
-    >
+    <van-card class="card-itself price num" :num="course.remain"
+      :price="[course.coursePrice > 0 ? course.coursePrice: '免费']" :title="course.className" :thumb="imgUrl"
+      :key="course.classId" @click="getClassInfo(course.classId)">
       <div slot="tags" style="margin-bottom:5px;">
         <van-tag type="primary" round>{{courseType}}</van-tag>&nbsp;
         <van-tag type="primary" round>{{interestType}}</van-tag>
@@ -21,33 +15,34 @@
     <!-- 详情弹窗 -->
     <van-popup v-model="show" position="bottom" :style="{ height: '90%' }">
       <div class="head-board">
-        <van-image width="100%" height="50vw" :src="imgUrl"/>
+        <van-image width="100%" height="50vw" :src="imgUrl" />
         <div class="head-board__title van-ellipsis">
-          {{course.className}}
-          <span
-            style="font-size:75%;text-align: end;"
-          >/{{claMsg.teacherName || '未知'}}</span>
+          {{course.className}} /
+          <span style="font-size:90%;text-align: end;"> {{claMsg.teacherName || '未知'}}</span>
         </div>
       </div>
       <van-tabs v-model="activeName" color="#3366ff" line-height="3px" sticky>
         <van-tab title="课程简介">
           <div class="msg_board">
             <div class="msg_box">
+              <div style="color:#818181;font-size:17px;margin:8px 0">
+                <div>&nbsp;课程名称: {{course.className}} </div>
+              </div>
               <div style="color:#818181;font-size:14px">
-                <van-icon name="newspaper-o"/>&nbsp;类型：
+                <van-icon name="wap-home-o" />&nbsp;类型：
                 <van-tag plain type="primary" size="large">{{courseType}}</van-tag>&nbsp;
                 <van-tag plain type="warning" size="large">{{interestType}}</van-tag>
               </div>
               <div>
                 <div style="color:#818181;font-size:14px;margin-top:5px">
-                  <van-icon name="wap-home-o"/>&nbsp;适用阶段：
+                  <van-icon name="wap-home-o" />&nbsp;适用阶段：
                   <div class="box_other__holder" v-for="item of gradeList" :key="item">
                     <van-tag style="color:#256bf6;font-size:13px">{{item}}</van-tag>&nbsp;
                   </div>
                 </div>
               </div>
             </div>
-            <div style="margin:20px 0 0 10px;">
+            <div style="margin:20px 0 0 20px;">
               <div class="title">课程任务</div>
               <div class="box_other">
                 <p style="color: #666;">{{course.courseMission || '未知'}}</p>
@@ -69,7 +64,7 @@
           </div>
         </van-tab>
         <van-tab title="时间" @click="onClick">
-          <div class="msg_board" style="margin:10px">
+          <div class="msg_board" style="margin: 10px auto;width: 90%;">
             <div class="title">支付时间</div>
             <div class="box_other">
               <p style="color: #666;">{{payTime}}</p>
@@ -78,9 +73,8 @@
             <div class="titletime">第一学段</div>
             <div v-if="!course.regularTimeDto" class="courseSchedule">暂无第一学段安排</div>
             <div v-else-if="course.regularTimeDto" class="courseSchedule">
-              <div
-                class="time"
-              >开班时间：{{course.regularTimeDto.courseStartDate}}~{{course.regularTimeDto.courseEndDate}}</div>
+              <div class="time">开班时间：{{course.regularTimeDto.courseStartDate}}~{{course.regularTimeDto.courseEndDate}}
+              </div>
               <div class="time">
                 上课时间：{{course.regularTimeDto.courseStartTime}}~{{course.regularTimeDto.courseEndTime}}
                 <van-tag type="primary" size="medium">{{ weekList }}</van-tag>
@@ -90,25 +84,18 @@
             <div class="titletime">第二学段</div>
             <div v-if="course.otherTimeDto.length==0" class="courseSchedule">暂无第二学段安排</div>
             <div v-else-if="course.otherTimeDto" class="courseSchedule">
-              <div
-                class="time"
-              >开班时间：{{course.otherTimeDto[0].courseStartDate}}~{{course.otherTimeDto[0].courseEndDate}}</div>
-              <div
-                class="time"
-              >上课时间：{{course.otherTimeDto[0].courseStartTime}}~{{course.otherTimeDto[0].courseEndTime}}</div>
+              <div class="time">开班时间：{{course.otherTimeDto[0].courseStartDate}}~{{course.otherTimeDto[0].courseEndDate}}
+              </div>
+              <div class="time">上课时间：{{course.otherTimeDto[0].courseStartTime}}~{{course.otherTimeDto[0].courseEndTime}}
+              </div>
               <div class="time">教室：{{course.otherTimeDto[0].otherClassRoom}}</div>
             </div>
           </div>
         </van-tab>
         <div style="height: 50px"></div>
       </van-tabs>
-      <van-submit-bar
-        :price="course.coursePrice*100"
-        button-text="加入购物车"
-        :disabled="!course.fitGradeId.includes(gradeId)"
-        @submit="createPay"
-        id="button"
-      />
+      <van-submit-bar :price="course.coursePrice*100" button-text="加入购物车"
+        :disabled="!course.fitGradeId.includes(gradeId)" @submit="createPay" id="button" />
     </van-popup>
   </div>
 </template>
@@ -182,9 +169,7 @@ export default {
     },
     // 图片
     imgUrl() {
-      return `https://zhsj.bnuz.edu.cn/ComprehensiveSys/${
-        this.course.courseImgUrl
-      }`;
+      return `https://zhsj.bnuz.edu.cn/ComprehensiveSys/${this.course.courseImgUrl}`;
     },
     // 星期映射
     weekList() {
@@ -241,7 +226,8 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  margin-bottom: 15px;
+  margin: 10px;
+  // box-shadow: #dddbdb 0px 1px 7px;
   &-itself {
     background: #fff;
   }
@@ -250,14 +236,14 @@ export default {
   &__title {
     font-size: 120%;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   &__bottom {
-    margin-top: 10px;
+    margin-top: 4px;
     font-size: 120%;
   }
   &__content {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
   }
 }
 #courseTag {
@@ -279,9 +265,9 @@ export default {
   border-bottom: 1px solid #f3f2f2;
 }
 .msg_box {
-  margin: 18px;
+  margin: 12px;
   padding: 6px;
-  border: 1px solid #bababa;
+  // border: 1px solid #bababa;
   border-radius: 5px;
 }
 .time {
@@ -293,14 +279,14 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 130%;
-  font-weight: bold;
+  font-size: 100%;
+  // font-weight: bold;
   &__title {
     width: 100%;
     position: absolute;
-    top: 38vw;
+    top: 40vw;
     box-sizing: border-box;
-    padding: 10px 0;
+    padding: 10px 15px;
     background: rgba(#333, 0.7);
     color: #f3f2f2;
     overflow: hidden;
@@ -362,7 +348,7 @@ export default {
 }
 .num /deep/ .van-card__num {
   color: blue;
-  margin-right: 170px;
+  margin-right: 4px;
 }
 .titletime {
   margin: 3% 2%;
@@ -396,5 +382,29 @@ export default {
   border: 1px solid #dbe7ff;
   color: #727272;
   border-radius: 9px;
+}
+/deep/.van-image__error,
+.van-image__img,
+.van-image__loading {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/deep/.van-card__thumb {
+  position: relative;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+  flex: none;
+  width: 90px;
+  height: 90px;
+  margin-right: 18px;
+}
+.van-card {
+  position: relative;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  color: #323233;
+  font-size: 12px;
+  background-color: #ffffff;
 }
 </style>

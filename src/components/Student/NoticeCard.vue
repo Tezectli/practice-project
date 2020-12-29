@@ -40,7 +40,7 @@ export default {
 <style lang="scss" scoped>
 .card {
   width: 95%;
-  height: 180px;
+  height: 150px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -49,9 +49,11 @@ export default {
   &-left {
     flex: 2;
     height: 100%;
+    // background-color: rgb(175, 175, 175);
   }
   &-right {
     flex: 3;
+    margin-left: 10px;
     height: 100%;
     position: relative;
     display: flex;
@@ -59,34 +61,36 @@ export default {
     flex-direction: column;
     &__title {
       flex: 1;
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 550;
       color: #777;
-      padding: 2px;
+      padding: 7px 0 0 7px;
       &-class {
-        font-size: 60%;
+        font-size: 14px;
       }
     }
     &__content {
       position: relative;
       flex: 3;
-      padding: 10px;
-      margin: 10px;
+      padding: 0 7px 7px 7px;
+      // margin: 10px;
       border-radius: 8px;
-      background: #1ab394;
-      color: #fff;
-      font-weight: bold;
-      &::before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: -9px;
-        left: 10px;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-bottom: 12px solid #1ab394;
-
-      }
+      // background: #1ab394;
+      color: rgb(124, 124, 124);
+      // font-weight: bold;
+      font-size: 12px;
+      margin-top: -9px;
+      margin-bottom: 9px;
+      // &::before {
+      //   content: "";
+      //   display: block;
+      //   position: absolute;
+      //   top: -9px;
+      //   left: 10px;
+      //   border-left: 12px solid transparent;
+      //   border-right: 12px solid transparent;
+      //   border-bottom: 12px solid #1ab394;
+      // }
     }
     &__time {
       width: 90%;
@@ -94,8 +98,27 @@ export default {
       display: inline-flex;
       justify-content: flex-end;
       bottom: 15px;
-      color: #fff;
+      font-size: 12px;
+      color: rgb(49, 49, 49);
     }
+  }
+  /deep/.van-image__error {
+    display: block;
+    width: 90%;
+    height: 80%;
+    margin: 10px 0 0 10px;
+  }
+  /deep/.van-image__img {
+    display: block;
+    width: 90%;
+    height: 80%;
+    margin: 10px 0 0 10px;
+  }
+  /deep/.van-image__loading {
+    display: block;
+    width: 90%;
+    height: 80%;
+    margin: 10px 0 0 10px;
   }
 }
 </style>

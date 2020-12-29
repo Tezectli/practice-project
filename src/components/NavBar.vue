@@ -1,5 +1,7 @@
 <template>
+  <!-- <transition name="slide-left"> -->
   <van-nav-bar class="navBar" left-text="返回" left-arrow :title="title" @click-left="onClickLeft" />
+  <!-- </transition> -->
 </template>
 
 <script>

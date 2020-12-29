@@ -1,21 +1,11 @@
 <template>
   <div>
-    <van-tabs v-model="tab" sticky color="#1989fa" class="mb-6">
+    <van-tabs v-model="tab" color="#1989fa" class="mb-6">
       <van-tab title="自我评价">
-        <evaluation-selector
-          v-model="checkboxVal"
-          :target="target"
-          :historyEvaluation="historyEvaluation"
-        />
+        <evaluation-selector v-model="checkboxVal" :target="target" :historyEvaluation="historyEvaluation" />
         <van-row type="flex" justify="center" style="margin:15px 0;">
           <van-col span="16">
-            <van-button
-              type="info"
-              round
-              size="large"
-              class="mt-1"
-              @click="submitEvaluation"
-            >提交评价</van-button>
+            <van-button type="info" round size="large" class="mt-1" @click="submitEvaluation">提交评价</van-button>
           </van-col>
         </van-row>
       </van-tab>
@@ -24,13 +14,7 @@
         <custom-evaluation v-model="customVal" />
         <van-row type="flex" justify="center" style="margin:15px 0;">
           <van-col span="16">
-            <van-button
-              type="info"
-              round
-              size="large"
-              class="mt-1"
-              @click="submitCustomEvaluate"
-            >提交评价</van-button>
+            <van-button type="info" size="large" class="mt-1" @click="submitCustomEvaluate">提交评价</van-button>
           </van-col>
         </van-row>
       </van-tab>
@@ -39,21 +23,21 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import {Tab, Tabs, Button, Toast} from 'vant';
+import Vue from "vue";
+import { Tab, Tabs, Button, Toast } from "vant";
 import EvaluationSelector from "../../components/Student/EvaluationSelector";
 import CustomEvaluation from "../../components/Student/CustomEvaluation";
 import CurrencyPicker from "../../components/Student/CurrencyPicker";
 
 Vue.use(Tab)
-    .use(Tabs)
-    .use(Button);
+  .use(Tabs)
+  .use(Button);
 export default {
   name: "StudentEvaluation",
-  components: {CurrencyPicker, CustomEvaluation, EvaluationSelector},
-  data () {
+  components: { CurrencyPicker, CustomEvaluation, EvaluationSelector },
+  data() {
     return {
-      tab: '',
+      tab: "",
       currency: {},
       checkboxVal: [],
       target: 2,
@@ -64,31 +48,31 @@ export default {
       },
       week: 0,
       historyEvaluation: []
-    }
+    };
   },
-  created () {
-    this.getCurrentWeek()
+  created() {
+    this.getCurrentWeek();
   },
   watch: {
     week: {
-      handler () {
-        this.getHistoryStudentEvaluate()
+      handler() {
+        this.getHistoryStudentEvaluate();
       }
     }
   },
   methods: {
     // 提交评价
-    async submitEvaluation () {
+    async submitEvaluation() {
       try {
         if (this.checkboxVal.length === 0) {
-          Toast("您还没选择任何评价内容哦！")
+          Toast("您还没选择任何评价内容哦！");
         } else {
           let updateList = [];
           this.checkboxVal.forEach(item => {
-            updateList.push(item.templateId)
+            updateList.push(item.templateId);
           });
           await this.$api.evaluation.updateContent(updateList, this.target);
-          this.checkboxVal = []
+          this.checkboxVal = [];
         }
       } catch (e) {
         // eslint-disable-next-line
@@ -96,19 +80,23 @@ export default {
       }
     },
     // 获取当前周次
-    async getCurrentWeek () {
-        try {
-            this.week = await this.$api.common.getCurrentWeek()
-        } catch (e) {
-            // eslint-disable-next-line
-            console.log("​catch -> e", e);
-        }
+    async getCurrentWeek() {
+      try {
+        this.week = await this.$api.common.getCurrentWeek();
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log("​catch -> e", e);
+      }
     },
     // 自定义评价
-    async submitCustomEvaluate () {
+    async submitCustomEvaluate() {
       try {
-        if (this.customVal.content === "" || this.customVal.score === 0 || !(this.customVal.file instanceof File)) {
-            Toast("您尚未输入全部信息或者未上传资源！")
+        if (
+          this.customVal.content === "" ||
+          this.customVal.score === 0 ||
+          !(this.customVal.file instanceof File)
+        ) {
+          Toast("您尚未输入全部信息或者未上传资源！");
         } else {
           let evaluateContent = {
             content: this.customVal.content,
@@ -117,7 +105,11 @@ export default {
             subcurrencyId: this.currency.subcurrencyId,
             evaluationScore: this.customVal.score
           };
-          await this.$api.evaluation.customEvaluate(evaluateContent, this.customVal.file, this.target);
+          await this.$api.evaluation.customEvaluate(
+            evaluateContent,
+            this.customVal.file,
+            this.target
+          );
           this.customVal = {
             content: "",
             score: 0,
@@ -130,13 +122,13 @@ export default {
       }
     },
     // 获取学生模版历史评价
-    async getHistoryStudentEvaluate () {
+    async getHistoryStudentEvaluate() {
       try {
         let res = await this.$api.evaluation.initStudentTemplate(this.week);
         this.historyEvaluation = res.data.map(item => {
           return {
             templateId: item.templateId
-          }
+          };
         });
       } catch (e) {
         // eslint-disable-next-line
@@ -144,11 +136,14 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .mb-6 {
   margin-bottom: 60px;
+}
+.mt-1 {
+  border-radius: 7px;
 }
 </style>

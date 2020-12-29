@@ -1,27 +1,12 @@
 <template>
   <div>
-    <van-tabs
-      v-model="tab"
-      sticky
-      color="#1989fa"
-      class="mb-6"
-    >
+    <van-tabs v-model="tab" color="#1989fa" class="mb-6">
       <van-tab title="同伴评价">
         <friend-selector v-model="friendList" class="mb-1" />
-        <evaluation-selector
-          v-model="checkboxVal"
-          :target="target"
-          :historyEvaluation="historyEvaluation"
-        />
+        <evaluation-selector v-model="checkboxVal" :target="target" :historyEvaluation="historyEvaluation" />
         <van-row type="flex" justify="center" style="margin:15px 0;">
           <van-col span="16">
-            <van-button
-              type="info"
-              round
-              size="large"
-              class="mt-1"
-              @click="submitFriendsEvaluation"
-            >提交评价</van-button>
+            <van-button type="info" round size="large" class="mt-1" @click="submitFriendsEvaluation">提交评价</van-button>
           </van-col>
         </van-row>
       </van-tab>
@@ -31,13 +16,7 @@
         <custom-evaluation v-model="customVal" />
         <van-row type="flex" justify="center" style="margin:15px 0;">
           <van-col span="16">
-            <van-button
-              type="info"
-              round
-              size="large"
-              class="mt-1"
-              @click="submitCustomEvaluation"
-            >提交评价</van-button>
+            <van-button type="info" round size="large" class="mt-1" @click="submitCustomEvaluation">提交评价</van-button>
           </van-col>
         </van-row>
       </van-tab>
@@ -46,19 +25,19 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import {Tab, Tabs, Row, Col, Button, Toast} from 'vant';
+import Vue from "vue";
+import { Tab, Tabs, Row, Col, Button, Toast } from "vant";
 import EvaluationSelector from "../../components/Student/EvaluationSelector";
 import FriendSelector from "../../components/Student/FriendSelector";
 import CustomEvaluation from "../../components/Student/CustomEvaluation";
 import CurrencyPicker from "../../components/Student/CurrencyPicker";
 
 Vue.use(Tab)
-    .use(Tabs)
-    .use(Row)
-    .use(Col)
-    .use(Button)
-    .use(Toast);
+  .use(Tabs)
+  .use(Row)
+  .use(Col)
+  .use(Button)
+  .use(Toast);
 export default {
   name: "FriendsEvaluation",
   components: {
@@ -67,9 +46,9 @@ export default {
     FriendSelector,
     EvaluationSelector
   },
-  data () {
+  data() {
     return {
-      tab: '',
+      tab: "",
       target: 5,
       checkboxVal: [],
       friendList: [],
@@ -82,14 +61,14 @@ export default {
       historyEvaluation: [],
       friendId: "",
       time: 0
-    }
+    };
   },
-  created () {
-    this.getCurrentWeek()
+  created() {
+    this.getCurrentWeek();
   },
   watch: {
     friendList: {
-      handler () {
+      handler() {
         if (this.friendList.length !== 0 && this.time < 1) {
           this.getHistoryFriendsEvaluate();
           // 为了避免选择同伴时渲染多次历史评价
@@ -100,18 +79,21 @@ export default {
   },
   methods: {
     // 提交模版评价
-    async submitFriendsEvaluation () {
+    async submitFriendsEvaluation() {
       try {
         if (this.checkboxVal.length === 0 || this.friendList.length === 0) {
-          Toast("您还没选择评价内容或者小伙伴哦！")
+          Toast("您还没选择评价内容或者小伙伴哦！");
         } else {
           let updateList = [];
           this.checkboxVal.forEach(item => {
-            updateList.push(item.templateId)
+            updateList.push(item.templateId);
           });
-          await this.$api.evaluation.updateFriendContent(updateList, this.friendList);
-          this.checkboxVal = []
-          this.friendList = []
+          await this.$api.evaluation.updateFriendContent(
+            updateList,
+            this.friendList
+          );
+          this.checkboxVal = [];
+          this.friendList = [];
         }
       } catch (e) {
         // eslint-disable-next-line
@@ -119,12 +101,12 @@ export default {
       }
     },
     // 自定义评价
-    async submitCustomEvaluation () {
+    async submitCustomEvaluation() {
       try {
         if (this.customVal.content === "" || this.customVal.score === 0) {
-          Toast("您还没输入评价内容或者评分哦！")
+          Toast("您还没输入评价内容或者评分哦！");
         } else if (this.friendList.length === 0) {
-            Toast("您还没选择小伙伴哦")
+          Toast("您还没选择小伙伴哦");
         } else {
           let evaluateContent = {
             content: this.customVal.content,
@@ -133,12 +115,15 @@ export default {
             evaluationScore: this.customVal.score,
             subcurrencyId: this.currency.subcurrencyId
           };
-          await this.$api.evaluation.customFriendEvalue(this.friendList, evaluateContent);
+          await this.$api.evaluation.customFriendEvalue(
+            this.friendList,
+            evaluateContent
+          );
           this.customVal = {
             content: "",
             score: 0
           };
-          this.friendList = []
+          this.friendList = [];
         }
       } catch (e) {
         // eslint-disable-next-line
@@ -146,23 +131,26 @@ export default {
       }
     },
     // 获取当前周次
-    async getCurrentWeek () {
+    async getCurrentWeek() {
       try {
-        this.week = await this.$api.common.getCurrentWeek()
+        this.week = await this.$api.common.getCurrentWeek();
       } catch (e) {
         // eslint-disable-next-line
         console.log("​catch -> e", e);
       }
     },
     // 获取同伴历史评价
-    async getHistoryFriendsEvaluate () {
+    async getHistoryFriendsEvaluate() {
       try {
         // 首屏渲染默认选中的同伴模版评价
-        let res = await this.$api.evaluation.initFriendTemplate(this.friendList[0], this.week);
+        let res = await this.$api.evaluation.initFriendTemplate(
+          this.friendList[0],
+          this.week
+        );
         this.historyEvaluation = res.data.map(item => {
           return {
             templateId: item.templateId
-          }
+          };
         });
       } catch (e) {
         // eslint-disable-next-line
@@ -170,7 +158,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -179,5 +167,9 @@ export default {
 }
 .mb-1 {
   margin-bottom: 10px;
+  border-radius: 7px;
+}
+.mt-1 {
+  border-radius: 7px;
 }
 </style>

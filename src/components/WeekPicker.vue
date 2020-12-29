@@ -5,7 +5,7 @@ To use:  v-modal="week（data里的一个number类型变量）
  */
 <template>
   <div>
-    <van-tabs :ellipsis="false" swipe-threshold="2" color="#78909c" @click="onConfirm" v-model="active">
+    <van-tabs :ellipsis="false" swipe-threshold="2" @click="onConfirm" v-model="active" swipeable="true" type="card">
       <van-tab v-for="item of data" :key="item.key" :title="item.text" :name="item.key"></van-tab>
     </van-tabs>
   </div>
@@ -33,7 +33,7 @@ export default {
     mode: {
       default: "single",
       type: String,
-      required:false,
+      required: false,
       validator: function(value) {
         return ["single", "all"].includes(value);
       }
@@ -44,7 +44,7 @@ export default {
       title: "选择教学周",
       show: false, // 弹出层的flag
       data: [],
-      active:''
+      active: ""
     };
   },
   created() {
@@ -80,13 +80,13 @@ export default {
         }
         //  默认选择最后一周（当前周)，如果是all模式默认选择所有周次
         if (this.mode == "all") {
-          this.active =  this.data[0].key
+          this.active = this.data[0].key;
           this.$emit("update", this.data[0].key);
         } else {
-          this.active =  currentWeek
+          this.active = currentWeek;
           this.$emit("update", currentWeek);
           // 把当前周翻到前面，避免用户认知偏差
-          this.data = this.data.reverse()
+          this.data = this.data.reverse();
         }
         this.$emit("change");
       } catch (e) {
@@ -96,11 +96,11 @@ export default {
     }
   },
   watch: {
-    mode: function(newVal,oldVal) {
+    mode: function(newVal, oldVal) {
       if (this.data.length) {
-        if (newVal === "all" && oldVal === 'single') {
+        if (newVal === "all" && oldVal === "single") {
           this.data.unshift({ text: "所有周次", key: -1 });
-        } else if (newVal === "single" && oldVal === 'all') {
+        } else if (newVal === "single" && oldVal === "all") {
           this.data.shift();
         }
         this.$emit("update", this.data[0].key);
@@ -115,4 +115,13 @@ export default {
 .area-wrapper {
   background: $white;
 }
+// .van-tabs__line {
+//   position: absolute;
+//   bottom: 15px;
+//   left: 0;
+//   z-index: 1;
+//   height: 3px;
+//   background-color: #f44 !important;
+//   border-radius: 3px;
+// }
 </style>

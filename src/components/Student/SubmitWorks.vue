@@ -9,7 +9,7 @@
     </van-cell-group>
     <van-row type="flex" justify="center" style="margin:15px 0;">
       <van-col span="20">
-        <van-button  type="primary" round size="large" class="mt-1" @click="postProduct">提交作品</van-button>
+        <van-button type="primary" size="large" class="mt-1" @click="postProduct">提交作品</van-button>
       </van-col>
     </van-row>
   </div>
@@ -17,7 +17,7 @@
 <script>
 import CoursePicker from "./CoursePicker";
 import Vue from "vue";
-import { Field, CellGroup, Button, Toast,Row,Col } from "vant";
+import { Field, CellGroup, Button, Toast, Row, Col } from "vant";
 import TypePicker from "./TypePicker";
 import UploadWorks from "./UploadWorks";
 
@@ -37,55 +37,45 @@ export default {
       postTitle: "",
       postContent: "",
       topicId: "",
-      file:{} 
+      file: {}
     };
-
   },
   methods: {
     getUploadWork(file) {
-      
       const map = {
-        0 : 'form_post_yanxue',
-        1 : 'form_post_shijian',
-        2 : 'form_post_fuwu',
-        3 : 'form_post_yishu'
+        0: "form_post_yanxue",
+        1: "form_post_shijian",
+        2: "form_post_fuwu",
+        3: "form_post_yishu"
       };
       this.topicId = map[this.course.type];
       this.file = file;
     },
     async postProduct() {
       try {
-        if(this.postTitle.length === 0)
-        {
+        if (this.postTitle.length === 0) {
           Toast.fail("你的标题为空,请重新输入");
-        }
-        else if(this.postContent.length === 0)
-        {
+        } else if (this.postContent.length === 0) {
           Toast.fail("你的作品描述为空,请重新输入");
+        } else if (!this.file.file) {
+          Toast.fail("你没有上传文件,请上传");
+        } else {
+          await this.$api.submitWork.postProduct(
+            this.course.key,
+            this.postTitle,
+            this.postContent,
+            this.postType,
+            this.topicId,
+            this.file.file
+          );
+          Toast("作品上传成功");
+          (this.postTitle = ""),
+            (this.postContent = ""),
+            (this.postType = ""),
+            (this.topicId = ""),
+            (this.file = {});
         }
-        else if(!this.file.file)
-        {
-          Toast.fail("你没有上传文件,请上传")
-        }
-        else 
-        {
-           await this.$api.submitWork.postProduct(
-              this.course.key,
-              this.postTitle,
-              this.postContent,
-              this.postType,
-              this.topicId,
-              this.file.file
-            );
-            Toast('作品上传成功')
-            this.postTitle = "",
-            this.postContent = "",
-            this.postType = "",
-            this.topicId = "",
-            this.file = {}
-        }
-      } 
-      catch (e) {
+      } catch (e) {
         // eslint-disable-next-line
         console.log("​catch -> e", e);
       }
@@ -97,5 +87,8 @@ export default {
 <style scoped>
 .mt-1 {
   margin-top: 10px;
+  border-radius: 7px;
+  background-color: #1989fa;
+  border: none;
 }
 </style>

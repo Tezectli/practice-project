@@ -1,6 +1,7 @@
 <template>
   <div>
-    <van-tabs color="#0a26ee" sticky>
+    <nav-bar title="我的订单" />
+    <van-tabs color="#0a26ee">
       <van-tab title="未支付" name="allOrder">
         <order orderType="NOT_PAID" />
       </van-tab>
@@ -16,13 +17,15 @@
 </template>
 <script>
 import Vue from "vue";
-import { Tab, Tabs} from "vant";
+import { Tab, Tabs } from "vant";
 import Order from "@/components/Student/Order";
+import NavBar from "@/components/NavBarColor";
 Vue.use(Tab).use(Tabs);
 export default {
   name: "myOrder",
   components: {
-    order: Order
+    order: Order,
+    "nav-bar": NavBar
   },
   data() {
     return {
@@ -30,9 +33,7 @@ export default {
       list: []
     };
   },
-  methods: {
-   
-  }
+  methods: {}
 };
 </script>
 <style scoped>

@@ -1,50 +1,30 @@
+// 申报界面 -诗婷 2020/10/8重构
 <template>
   <div>
-    <van-tabs
-      type="card"
-      style="margin:0 0 0 -17px"
-      color="#3366ff"
-      title-active-color="white"
-      title-inactive-color="black"
-      @change="changeTabs"
-    >
+    <!-- <van-sticky> -->
+    <nav-bar title="在线申报" />
+    <!-- </van-sticky> -->
+    <van-tabs type="card" style="margin:0 0 0 -17px" color="#3366ff" title-active-color="white"
+      title-inactive-color="black" @change="changeTabs" animated="true">
       <van-tab title="在线申报" style="margin-left:17px">
         <class-picker v-model="classId"></class-picker>
-        <van-tabs
-          :ellipsis="false"
-          swipe-threshold="2"
-          color="#1ab394"
-          @click="onConfirm"
-          v-model="active"
-        >
+        <van-tabs :ellipsis="false" swipe-threshold="2" color="#1ab394" @click="onConfirm" v-model="active">
           <van-tab v-for="(item,index) of currencyItem" :key="index" :title="item.text" :name="index"></van-tab>
         </van-tabs>
         <!-- <currency-picker class="mt-1" v-model="currency"></currency-picker> -->
-        <van-cell-group>
+        <van-cell-group style="padding-top:10px">
           <van-row>
             <van-col offset="1" span="12">
               评分
-              <van-rate v-model="score" size="24" />
+              <van-rate v-model="score" size="24" style="margin-top:10px" />
             </van-col>
           </van-row>
-          <van-field
-            v-model="content"
-            type="textarea"
-            rows="5"
-            autosize
-            placeholder="请输入20字以内的申报内容"
-          />
+          <van-field v-model="content" type="textarea" rows="5" autosize placeholder="请输入20字以内的申报内容" />
         </van-cell-group>
         <van-row type="flex" justify="center" style="margin:15px 0;">
           <van-col span="16">
-            <van-button
-              type="primary"
-              round
-              size="large"
-              color="#3366ff"
-              class="mt-1"
-              @click="submitCustomDeclare"
-            >提交申报</van-button>
+            <van-button type="info" square size="large" color="#3366ff" class="mt-1" @click="submitCustomDeclare">提交申报
+            </van-button>
           </van-col>
         </van-row>
       </van-tab>
@@ -64,6 +44,7 @@ import ClassPicker from "../../components/Student/ClassPicker";
 // import CurrencyPicker from "../../components/Student/CurrencyPicker";
 import HistoryDeclareGrid from "../../components/Student/HistoryDeclareGrid";
 import WeekPicker from "../../components/Student/WeekPicker";
+import NavBar from "@/components/NavBar";
 
 Vue.use(Tab)
   .use(Tabs)
@@ -79,6 +60,7 @@ export default {
     WeekPicker,
     HistoryDeclareGrid,
     // CurrencyPicker,
+    "nav-bar": NavBar,
     ClassPicker
   },
 
@@ -91,13 +73,13 @@ export default {
       content: "",
       score: 0,
       week: 0,
-      currencyItem:[]
+      currencyItem: []
     };
   },
   watch: {
     week() {
       this.getMyDeclare();
-    },
+    }
   },
   methods: {
     onClick() {
@@ -125,31 +107,31 @@ export default {
         subcurrencyId: this.currency.subcurrencyId,
         yn: 1
       };
-      await this.$api.declare.customDeclare(declareEvalue,this.classId);
-      this.content = ""
-      this.score = 0
+      await this.$api.declare.customDeclare(declareEvalue, this.classId);
+      this.content = "";
+      this.score = 0;
     },
-    async getCurrencyType () {
+    async getCurrencyType() {
       try {
-        let res = await this.$api.evaluation.initCurrencyType()
+        let res = await this.$api.evaluation.initCurrencyType();
         this.currencyItem = res.data.map(item => {
           return {
             key: item.currencyId,
             text: item.subcurrencyName,
             subcurrencyId: item.subcurrencyId
-          }
+          };
         });
-      }  catch (e) {
+      } catch (e) {
         // eslint-disable-next-line
         console.log("​catch -> e", e);
       }
     },
-    onConfirm(index){
-      this.currency = this.currencyItem[index]
+    onConfirm(index) {
+      this.currency = this.currencyItem[index];
     }
   },
-  mounted(){
-    this.getCurrencyType()
+  mounted() {
+    this.getCurrencyType();
   }
 };
 </script>
@@ -157,10 +139,12 @@ export default {
 <style lang="scss" scoped>
 .mt-1 {
   margin-top: 10px;
+  border-radius: 7px;
 }
 .mb-6 {
   margin-bottom: 60px;
-  margin-left: 17px;
+  width: 471px;
+  // margin-left: 17px;
 }
 /deep/ .van-tabs--card > .van-tabs__wrap {
   height: 45px;
@@ -179,5 +163,14 @@ export default {
 /deep/.van-tabs__nav--card .van-tab.van-tab {
   color: black;
   line-height: 44px;
+}
+/deep/.van-tabs--card {
+  padding-top: 0px;
+}
+/deep/[data-v-7999d168] .van-tabs__nav--card {
+  height: 44px;
+  width: 417px;
+  border-radius: 2px;
+  border: 0.5px solid white !important;
 }
 </style>

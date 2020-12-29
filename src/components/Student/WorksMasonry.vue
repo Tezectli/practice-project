@@ -114,7 +114,7 @@ export default {
 .masonry {
   display: flex; // 设置为Flex容器
   flex-direction: row; // 主轴方向设置为水平方向
-  background: white;
+  // background: rgb(235, 235, 235);
 }
 .column {
   width: 50%;

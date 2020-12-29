@@ -1,18 +1,13 @@
 <template>
   <div>
     <div class="chart-wrapper">
-      <ve-radar
-        :data="chartData"
-        :legend-visible="false"
-        :settings="chartSettings"
-        :radar="radarOption"
-      />
+      <ve-radar :data="chartData" :legend-visible="false" :settings="chartSettings" :radar="radarOption" />
     </div>
     <van-grid :column-num="3">
       <van-grid-item v-for="item of gridItems" :key="item.icon">
         <div class="grid-score">
           <svg class="color-icon icon" aria-hidden="true">
-            <use :xlink:href="item.icon"/>
+            <use :xlink:href="item.icon" />
           </svg>
           {{item.score}}
         </div>
@@ -36,7 +31,7 @@ export default {
     },
     week: {
       type: Number,
-      required:true
+      required: true
     }
   },
   data() {
@@ -63,7 +58,7 @@ export default {
             },
             {
               offset: 1,
-              color: "#39F3BB" // 100% 处的颜色
+              color: "#1989FA" // 100% 处的颜色
             }
             // background-image: linear-gradient(-225deg, #DFFFCD 0%, #90F9C4 48%, #39F3BB 100%);
           ],
@@ -114,7 +109,7 @@ export default {
       return keyArr.map((item, index) => ({
         name: item,
         score: valArr[index],
-        icon: '#zhsj-icon-' + iconArr[index]
+        icon: "#zhsj-icon-" + iconArr[index]
       }));
     }
   },
@@ -122,7 +117,7 @@ export default {
     // 获取雷达图数据
     async initRadar() {
       try {
-        const res = await this.$api.chart.initRadar(this.classId,this.week);
+        const res = await this.$api.chart.initRadar(this.classId, this.week);
         const data = {
           columns: ["班级"],
           rows: []
@@ -143,36 +138,44 @@ export default {
   },
   watch: {
     classId() {
-      this.week&&this.initRadar();
+      this.week && this.initRadar();
     },
-    week(){
-      this.classId&&this.initRadar();
+    week() {
+      this.classId && this.initRadar();
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 .icon {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 .grid-score {
   width: 100%;
   text-align: center;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 22px;
   // color:#39F3BB;
-  color: #fff;
+  color: rgb(124, 124, 124);
   margin-bottom: 10px;
-  background-image: linear-gradient(
-    -225deg,
-    #dfffcd 0%,
-    #90f9c4 48%,
-    #39f3bb 100%
-  );
+  // background-image: linear-gradient(
+  //   -225deg,
+  //   #dfffcd 0%,
+  //   #90f9c4 48%,
+  //   #39f3bb 100%
+  // );
 }
 .grid-desc {
   vertical-align: middle;
-  font-size: 18px;
+  font-size: 15px;
+  color: #686868;
+}
+/deep/.color-icon {
+  // width: 2.5em;
+  // height: 2.5em;
+  vertical-align: 0em;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>

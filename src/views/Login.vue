@@ -1,83 +1,80 @@
 <template>
-  <div class="container" :style="{backgroundColor:bgColor}">
+  <div class="container" :style="{backgroundColor:bgColor,transition:transitonSet}">
+    <transition name="titlepict">
+      <!-- <div aria-hidden="true" slot="title"> -->
+      <img src="@/assets/img/title_teacher_2.png" class="titlepic" v-show="this.user.role === 'teacher'">
+      <!-- </div> -->
+    </transition>
+    <transition name="titlepict">
+      <!-- <div aria-hidden="true" slot="title"> -->
+      <img src="@/assets/img/title_children_2.png" class="titlepic" v-show="this.user.role !== 'teacher'">
+      <!-- </div> -->
+    </transition>
+    <van-row type="flex" justify="center" style="margin-top:225px">
+      <h4 class="title_top">综合实践系统</h4>
+    </van-row>
     <van-row type="flex" justify="center">
-      <h2 class="title">综合实践系统</h2>
+      <h4 class="title_down">用户登录</h4>
     </van-row>
     <div class="card">
+      <div style="width:324.8px;border-radius: 7px; background-color: #ffffff;">
+        <van-row type="flex" justify="center" class="card-row" v-if="!showWechat">
+          <van-col span="22">
+            <van-radio-group v-model="user.role">
+              <van-cell-group class="cell-group">
+                <van-row>
+                  <van-col span="12">
+                    <van-cell class="field" clickable @click="user.role = 'teacher'">
+                      <svg class="color-icon" aria-hidden="true" slot="title">
+                        <use xlink:href="#zhsj-icon-jishu" />
+                      </svg>
+                      <div class="text_choose">老师</div>
+                      <van-radio slot="right-icon" name="teacher" checked-color="#78909c" icon-size="18px" />
+                    </van-cell>
+                  </van-col>
+                  <van-col span="12">
+                    <van-cell class="field" clickable @click="user.role = 'student'">
+                      <svg class="color-icon" aria-hidden="true" slot="title">
+                        <use xlink:href="#zhsj-icon-xuesheng" />
+                      </svg>
+                      <div class="text_choose">学生</div>
+                      <van-radio slot="right-icon" name="student" checked-color="#1ab394" icon-size="18px" />
+                    </van-cell>
+                  </van-col>
+                </van-row>
+              </van-cell-group>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </div>
+      <div style="height:18px"> </div>
       <van-row type="flex" justify="center" class="card-row">
-        <van-col span="18">
-          <div class="card-title">
-            <van-icon name="user-o" />&nbsp;&nbsp;用户登录
-          </div>
-        </van-col>
-      </van-row>
-      <van-row type="flex" justify="center" class="card-row">
-        <van-col span="22">
-          <van-cell-group title="地区" class="cell-group">
-            <location-picker v-model="school" />
-          </van-cell-group>
-        </van-col>
-      </van-row>
-      <van-row type="flex" justify="center" class="card-row" v-if="!showWechat">
-        <van-col span="22">
-          <van-radio-group v-model="user.role">
-            <van-cell-group title="角色" class="cell-group">
-              <van-row>
-                <van-col span="12">
-                  <van-cell class="field" clickable @click="user.role = 'teacher'">
-                    <svg class="color-icon" aria-hidden="true" slot="title">
-                      <use xlink:href="#zhsj-icon-jishu" />
-                    </svg>
-                    <van-radio slot="right-icon" name="teacher" checked-color="#78909c" />
-                  </van-cell>
-                </van-col>
-                <van-col span="12">
-                  <van-cell class="field" clickable @click="user.role = 'student'">
-                    <svg class="color-icon" aria-hidden="true" slot="title">
-                      <use xlink:href="#zhsj-icon-xuesheng" />
-                    </svg>
-                    <van-radio slot="right-icon" name="student" checked-color="#1ab394" />
-                  </van-cell>
-                </van-col>
-              </van-row>
+        <div style="width:324px;padding: 20px 10px 20px 10px; border-radius: 7px; background-color: #ffffff;">
+          <van-col span="22">
+            <van-cell-group class="cell-group">
+              <van-field v-model="user.username" clearable placeholder="请输入用户名" left-icon="user-circle-o" error
+                class="field" />
+              <van-field v-model="user.password" type="password" placeholder="请输入密码" left-icon="edit" error
+                class="field" />
             </van-cell-group>
-          </van-radio-group>
-        </van-col>
+          </van-col>
+        </div>
+      </van-row>
+      <div style="height:18px"> </div>
+      <van-row type="flex" justify="center" class="card-row">
+        <div style="  padding: 2px 6px; border-radius: 7px; background-color: #ffffff;">
+          <van-col span="22">
+            <van-cell-group class="cell-group">
+              <location-picker v-model="school" />
+            </van-cell-group>
+          </van-col>
+        </div>
       </van-row>
       <van-row type="flex" justify="center" class="card-row">
-        <van-col span="22">
-          <van-cell-group title="账户" class="cell-group">
-            <van-field
-              v-model="user.username"
-              clearable
-              placeholder="请输入用户名"
-              left-icon="user-circle-o"
-              error
-              class="field"
-            />
-            <van-field
-              v-model="user.password"
-              type="password"
-              placeholder="请输入密码"
-              left-icon="edit"
-              error
-              class="field"
-            />
-          </van-cell-group>
-        </van-col>
-      </van-row>
-      <van-row type="flex" justify="center" class="card-row">
-        <van-col span="22">
+        <van-col span="24">
           <van-row type="flex" justify="center" align="bottom" class="card-row btn-row">
-            <van-button
-              block
-              round
-              :loading="loading"
-              loading-text="登录中"
-              class="btn-login"
-              type="primary"
-              @click="login"
-            >登录</van-button>
+            <van-button block round :loading="loading" loading-text="登录中" :class="btnColor" type="primary"
+              @click="login">登录</van-button>
           </van-row>
         </van-col>
       </van-row>
@@ -138,13 +135,19 @@ export default {
       },
       loading: false,
       school: "",
-      showWechat: false,
+      showWechat: false
     };
   },
-  computed:{
+  computed: {
     // 按身份切换背景颜色
-    bgColor(){
-      return this.user.role ==='teacher'?'#78909c':'#1ab394'
+    bgColor() {
+      return this.user.role === "teacher" ? "#4272a0" : "#1ab394";
+    },
+    btnColor() {
+      return this.user.role === "teacher" ? "btn-login" : "btn-login-c";
+    },
+    transitonSet() {
+      return "all 0.2s ease";
     }
   },
   methods: {
@@ -166,7 +169,7 @@ export default {
         store.set("user", {
           username: this.user.username,
           role: this.user.role,
-          password : encypass
+          password: encypass
         });
         this.$router.push("t/home");
       } catch (e) {
@@ -178,8 +181,7 @@ export default {
     // 学生登录
     async studentLogin() {
       this.loading = true;
-         
-           
+
       try {
         // 尝试登录
         let res = await this.$api.login.studentLogin(
@@ -191,15 +193,15 @@ export default {
         this.loading = false;
         if ([500, 200, 10].includes(res.data.code)) {
           // 使用localstorage保存相关信息
-        let base = require("js-base64").Base64;
-        var encypass = base.encode(this.user.password);
-        
+          let base = require("js-base64").Base64;
+          var encypass = base.encode(this.user.password);
+
           store.set("user", {
             school: this.school,
             username: this.user.username,
             role: this.user.role,
             id: res.data.detail,
-            password : encypass
+            password: encypass
           });
           // 如果在微信打开就询问绑不绑微信
           if (res.data.code === 10) {
@@ -207,8 +209,8 @@ export default {
           } else {
             this.$router.push("s/home");
           }
-        }else{
-          Toast(res.data.detail)
+        } else {
+          Toast(res.data.detail);
         }
       } catch (e) {
         // eslint-disable-next-line
@@ -218,14 +220,14 @@ export default {
       }
     },
     //填充信息
-  Fill_Up(){
-    var data = store.get("user");
-            if(data!=null){
-              let base = require("js-base64").Base64;  
-              var decryptpass = base.decode(data.password);
-              this.user.username = data.username;
-              this.user.password = decryptpass;
-            }
+    Fill_Up() {
+      var data = store.get("user");
+      if (data != null) {
+        let base = require("js-base64").Base64;
+        var decryptpass = base.decode(data.password);
+        this.user.username = data.username;
+        this.user.password = decryptpass;
+      }
     },
     // 绑定微信
     async bindWechat(typeCode) {
@@ -262,9 +264,11 @@ export default {
         });
     },
     // 选择角色
-    selectRole(){
-      this.showWechat = isOnWechat()
-      this.user.role = ['student','teacher'].includes(this.$route.query.role) ? this.$route.query.role:'teacher'
+    selectRole() {
+      this.showWechat = isOnWechat();
+      this.user.role = ["student", "teacher"].includes(this.$route.query.role)
+        ? this.$route.query.role
+        : "teacher";
     }
   },
   beforeCreate() {
@@ -273,35 +277,98 @@ export default {
         return;
       }
       store.set("authorize", true);
-      window.location.replace(
+      window.location
+        .replace
         // "https://zhsj.bnuz.edu.cn/ComprehensiveSys/wechat/login/authorize"
         // "http://zhsj.natapp1.cc/ComprehensiveSys/wechat/login/authorize"
-      );
+        ();
     }
   },
-  created(){
-      // 默认角色为传参设置
-      this.selectRole()
+  created() {
+    // 默认角色为传参设置
+    this.selectRole();
   },
-  destroyed(){
+  destroyed() {
     // 注销事件防止泄漏，清除标记事件
-    store.set("authorize", false)
+    store.set("authorize", false);
   },
-  mounted:function(){
+  mounted: function() {
     this.Fill_Up();
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "@/scss/base.scss";
-
+.titlepict-enter-active {
+  // transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+// .titlepict-leave-active {
+//   transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+// }
+.titlepict-enter,
+.titlepict-leave-to {
+  // transform: scale(-5px);
+  opacity: 0;
+}
+@media (max-width: 416px) {
+  .titlepic {
+    // width: 120%;
+    position: fixed;
+    height: 53.06667vw;
+    // opacity: 100%;
+    transition: all 0.5s;
+  }
+}
+@media (min-width: 417px) {
+  .titlepic {
+    // width: 120%;
+    position: fixed;
+    height: 53.06667vw;
+    opacity: 10%;
+    transition: all 0.5s;
+  }
+}
+.text_choose {
+  // align-items: center;
+  text-align: center;
+  color: #83838a;
+  width: 2.5em;
+  height: 2.5em;
+  line-height: 2.5em;
+}
+.border_radius {
+  padding: 2px;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+/deep/.cell-group.vant-cell-group {
+  width: 500px;
+}
 .container {
-  width: 375px;
-  height: 667px;
+  // border-radius: 7px;
+  // width: 375px;
+  height: 100vh;
   background-color: $primary;
   display: flex;
   align-items: center;
   flex-direction: column;
+  .title_top {
+    color: $white;
+    text-align: center;
+    font-size: 120%;
+    margin: 10px 0;
+    font-weight: 500;
+    letter-spacing: 5px;
+  }
+  .title_down {
+    color: $white;
+    text-align: center;
+    font-size: 100%;
+    margin: 2px 0;
+    font-weight: 500;
+    letter-spacing: 5px;
+  }
   .title {
     color: $white;
     text-align: center;
@@ -309,14 +376,15 @@ export default {
     margin: 10px 0;
   }
   .card {
-    background: #f6f6f6;
-    width: 320px;
+    // background: #f6f6f6;
+    // width: 320px;
+    // margin-top: 181.1px;
+    z-index: 999;
     height: 440px;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
-    box-shadow: 1px 1px 1px #777;
-    margin-top: 40px;
+    // box-shadow: 1px 1px 1px #777;
+    margin-top: 10px;
     &-title {
       width: 100%;
       height: 100%;
@@ -335,11 +403,34 @@ export default {
     background: $white;
   }
   .btn-login {
-    background: $primary;
-    font-weight: bold;
-    font-size: 120%;
-    border-radius: 10em;
+    background: #1b4b79;
+    // font-weight: bold;
+    font-size: 100%;
+    border-radius: 7px;
     margin-top: 20px;
+    // width: 324.8px;
+  }
+  .btn-login-c {
+    background: #136c5e;
+    // font-weight: bold;
+    font-size: 100%;
+    border-radius: 7px;
+    margin-top: 20px;
+    // width: 324.8px;
+  }
+  /deep/.van-cell {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px 20px;
+    // overflow: hidden;
+    color: #323233;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: #fff;
   }
   .van-cell-group /deep/.van-cell-group__title {
     padding-top: 5px;
@@ -355,7 +446,7 @@ export default {
     &__btn {
       background: $gradient;
     }
-    &__text{
+    &__text {
       margin-top: 5px;
       color: #f6f6f6;
     }

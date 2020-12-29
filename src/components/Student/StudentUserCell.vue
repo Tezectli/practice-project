@@ -33,23 +33,13 @@
         </template>
       </van-cell>
     </van-cell-group>
-    <van-dialog
-      v-model="showAboutUs"
-      title="关于我们"
-      show-cancel-button
-      :beforeClose="beforeCloseAboutUs"
-    >
+    <van-dialog v-model="showAboutUs" title="关于我们" show-cancel-button :beforeClose="beforeCloseAboutUs">
       <div style="text-align: center;margin-top:20px;margin-bottom:20px">
         <img src="@/assets/img/schoolLogo.jpg" width="160px" height="160px" />
       </div>
     </van-dialog>
-    <van-dialog
-      v-model="showPassword"
-      title="修改密码"
-      show-cancel-button
-      :beforeClose="beforeClose"
-      style="width:380px;height:300px"
-    >
+    <van-dialog v-model="showPassword" title="修改密码" show-cancel-button :beforeClose="beforeClose"
+      style="width:380px;height:300px">
       <!-- <van-field type="password" placeholder="旧密码" left-icon="edit" v-model="oldPassword"/>
     <van-field type="password" placeholder="新密码" left-icon="edit" v-model="newPassword"/>
       <van-field type="password" placeholder="确认密码" left-icon="edit" v-model="confrimPassword"/>-->
@@ -57,20 +47,8 @@
       <van-cell-group>
         <van-field v-model="oldPassword" required clearable label="原登陆密码：" placeholder="请输入旧密码" />
 
-        <van-field
-          v-model="newPassword"
-          type="password"
-          label="新登陆密码："
-          placeholder="请输入新密码"
-          required
-        />
-        <van-field
-          v-model="confrimPassword"
-          type="password"
-          label="确认新密码："
-          placeholder="请确认新密码"
-          required
-        />
+        <van-field v-model="newPassword" type="password" label="新登陆密码：" placeholder="请输入新密码" required />
+        <van-field v-model="confrimPassword" type="password" label="确认新密码：" placeholder="请确认新密码" required />
       </van-cell-group>
       <van-icon name="bulb-o" style="margin-left:150px" />温馨提示
       <br />
@@ -78,21 +56,9 @@
       <br />
       <br />
     </van-dialog>
-    <van-dialog
-      v-model="showConnect"
-      title="意见反馈"
-      show-cancel-button
-      :beforeClose="beforeCloseConnect"
-    >
+    <van-dialog v-model="showConnect" title="意见反馈" show-cancel-button :beforeClose="beforeCloseConnect">
       <div style="text-align: center;margin-top:20px;margin-bottom:20px">
-        <van-field
-          autosize
-          size="large"
-          placeholder="请输入留言"
-          v-model="feedbackContent"
-          type="textarea"
-          rows="3"
-        />
+        <van-field autosize size="large" placeholder="请输入留言" v-model="feedbackContent" type="textarea" rows="3" />
       </div>
     </van-dialog>
   </div>
@@ -243,9 +209,26 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .cell-title {
   font-weight: 500;
   padding-left: 10px;
+}
+/deep/.van-cell-group {
+  background-color: transparent;
+}
+/deep/.van-cell {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 15px;
+  overflow: hidden;
+  color: #323233;
+  font-size: 14px;
+  line-height: 24px;
+  background-color: transparent;
 }
 </style>

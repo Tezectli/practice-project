@@ -38,10 +38,19 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .grid-title {
   padding-top: 10px;
-  font-size: 85%;
+  font-size: 80%;
   font-weight: 600;
+}
+/deep/.van-grid-item__content--center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border-radius: 7px;
 }
 </style>

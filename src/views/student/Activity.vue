@@ -1,28 +1,31 @@
 <template>
   <div class="page">
+    <nav-bar title="活动报名" />
     <van-search placeholder="搜索课程" shape="round" class="van-hairline--bottom" v-model="srhVal" @search="srh">
     </van-search>
-    <ActivityCard class="card" v-for="activity of activityPost" :key="activity.activityId" :content="activity"></ActivityCard>
+    <ActivityCard class="card" v-for="activity of activityPost" :key="activity.activityId" :content="activity">
+    </ActivityCard>
     <div class="bottom-text">没有更多了</div>
   </div>
 </template>
 <script>
 import Vue from "vue";
 import { Search } from "vant";
+import NavBar from "@/components/NavBar";
 import ActivityCard from "../../components/Student/ActivityCard";
 Vue.use(Search);
 export default {
   name: "Activity",
-  components: { ActivityCard },
+  components: { ActivityCard, "nav-bar": NavBar },
   data() {
     return {
       activityPost: [],
-      srhVal:''
+      srhVal: ""
     };
   },
   methods: {
     //获取活动列表
-    async getAllActivities(keyword="") {
+    async getAllActivities(keyword = "") {
       try {
         let res = await this.$api.activity.getAllActivities(keyword);
         this.activityPost = res.data;
@@ -31,23 +34,23 @@ export default {
         console.log("​catch -> e", e);
       }
     },
-    srh(){
-      this.getAllActivities(this.srhVal)
+    srh() {
+      this.getAllActivities(this.srhVal);
     }
   },
   created() {
     this.getAllActivities();
   },
-  watch:{
+  watch: {
     //搜索框的同步搜索
-    srhVal:function(newVal){
-      this.getAllActivities(newVal)
+    srhVal: function(newVal) {
+      this.getAllActivities(newVal);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.bottom-text{
+.bottom-text {
   width: 100%;
   height: 25px;
   color: #d4d4d4;

@@ -1,6 +1,7 @@
 /* 圆形头像组件 -润 */
+/* 2020.10.8修改-圆角头像组件 -诗婷 */
 <template>
-  <van-image :src="img" :width="size" :height="size" round fit="cover">
+  <van-image :src="img" :width="size" :height="size" radius="7px" fit="cover">
     <template v-slot:loading>
       <van-loading type="spinner" size="20" />
     </template>
@@ -26,7 +27,8 @@ export default {
   data() {
     return {
       // img: require(`https://zhsj.bnuz.edu.cn/ComprehensiveSys/${this.src}`)
-      img: require('@/assets/img/avatar.png')
+      // img: require('@/assets/img/avatar.png')
+      img: require("@/assets/img/userpic.png")
     };
   }
 };

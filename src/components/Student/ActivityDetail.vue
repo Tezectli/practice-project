@@ -38,15 +38,8 @@
     <div class="processes">活动简介</div>
     <van-cell :value="this.infoEntity.activityDescription" />
     <div class="processes">相关活动</div>
-    <van-card
-      class="processeslist van-hairline--bottom"
-      v-for="processes of processesList"
-      :key="processes.processId"
-      :content="processes"
-      :desc="processes.processType"
-      color
-      id="card"
-    >
+    <van-card class="processeslist van-hairline--bottom" v-for="processes of processesList" :key="processes.processId"
+      :content="processes" :desc="processes.processType" color id="card">
       <div slot="title" class="processes-title">{{processes.processDetail}}</div>
       <div slot="tags">
         <span class="tags-info">
@@ -54,12 +47,8 @@
         </span>
       </div>
       <div slot="footer">
-        <van-button
-          size="small"
-          color="rgb(255,255,255,0)"
-          class="btnsign"
-          :to="`/s/choiceTeam?processid=${processes.processId}`"
-        >立即报名</van-button>
+        <van-button size="small" color="rgb(255,255,255,0)" class="btnsign"
+          :to="`/s/choiceTeam?processid=${processes.processId}`">立即报名</van-button>
       </div>
     </van-card>
     <div class="bottom-text">没有更多了</div>
@@ -113,7 +102,7 @@ export default {
 <style lang="scss"  scoped>
 @import "@/scss/base.scss";
 .page {
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(255, 255, 255);
 }
 .head {
   width: 100%;
@@ -145,7 +134,7 @@ export default {
 .bottom-text {
   width: 100%;
   height: 25px;
-  color: #d4d4d4;
+  color: #ffffff;
   font-size: 90%;
   text-align: center;
   margin-top: 5px;
@@ -163,8 +152,8 @@ export default {
 }
 .processes {
   font-size: 16px;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-top: 15px;
+  margin-left: 20px;
   color: black;
   font-weight: 600;
 }
@@ -208,8 +197,22 @@ export default {
   color: black;
   font-weight: 600;
 }
+/deep/.van-cell {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 35px;
+  overflow: hidden;
+  color: #323233;
+  font-size: 14px;
+  line-height: 24px;
+  background-color: #fff;
+}
 .van-cell {
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(255, 255, 255);
   font-size: 14px;
   color: rgb(112, 112, 112);
 }

@@ -1,32 +1,32 @@
 <template>
   <div id="app">
-   <!-- 显示当前路由地址所对应的内容-->
-    <transition name="fade" mode="out-in">
+    <!-- 显示当前路由地址所对应的内容-->
+    <transition name="van-slide-down" mode="out-in">
       <router-view />
     </transition>
   </div>
 </template>
 <script>
 export default {
-  name: 'App',
-  provide () {
+  name: "App",
+  provide() {
     return {
       reload: this.reload
-    }
+    };
   },
-  data () {
+  data() {
     return {
       isRouterAlive: true
-    }
+    };
   },
   methods: {
     // 处理刷新
-    reload () {
-      this.isRouterAlive = false
-      this.$nextTick(function () {
-        this.isRouterAlive = true
-      })
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function() {
+        this.isRouterAlive = true;
+      });
     }
   }
-}
+};
 </script>
