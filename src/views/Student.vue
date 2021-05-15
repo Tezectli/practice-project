@@ -2,7 +2,7 @@
 <template>
   <div id="main">
     <!-- 显示当前路由地址所对应的内容-->
-    <transition name="van-slide-down" mode="out-in">
+    <transition name="van-slide-left" mode="out-in">
       <router-view />
     </transition>
     <van-tabbar route>
